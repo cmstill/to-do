@@ -49,11 +49,11 @@ if (file) {
   await createFile(file);
 }
 
-// code to add new todo to file with command line --add
+// code to add new todo to file with -a and -f
 
 if (add && file) {
   addToDo(add);
-  appendFile(file, add)
+  writeFile(file, add)
 }
 
 if (deleteFromList) {
