@@ -2,21 +2,15 @@ import ToDo from './toDoClass.js'
 
 export let toDoArr = [];
 
-//adding functionality.  supports adding multiple to-dos at once.  generates new class of ToDo then adds to toDoArr
-
-// export const addToDos = (...todos) => {
-//   todos.forEach((todo) => {
-//     const newToDo = new ToDo(todo);
-//     toDoArr.push(newToDo);
-//   });
-// };
-
 //adding functionality, supports adding one to-do at a time:
 
 export const addToDo = (todo) => {
   const newToDo = new ToDo(todo);
   toDoArr.push(newToDo);
 };
+
+addToDo('walk the dog');
+addToDo('wash the car');
 
 //list functionalitly...function thatiterates through toDoArr and then console.logs all the ToDos and their IDs...stringify? 
 
