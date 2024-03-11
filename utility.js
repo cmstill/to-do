@@ -9,9 +9,6 @@ export const addToDo = (todo) => {
   toDoArr.push(newToDo);
 };
 
-addToDo('walk the dog');
-addToDo('wash the car');
-
 //list functionalitly...function thatiterates through toDoArr and then console.logs all the ToDos and their IDs...stringify? 
 
 export const listToDos = () => {
@@ -23,6 +20,7 @@ export const listToDos = () => {
 //functionality to delete todo according to provided ID
 
 export const deleteToDo = (id) => {
-  const newArr = toDoArr.filter((todo) => todo.ID !== id);
+  let newArr = toDoArr.filter((todo) => todo.ID !== id);
   toDoArr = newArr;
 };
+

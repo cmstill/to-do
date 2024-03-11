@@ -1,8 +1,8 @@
 modules are like functions that let you use some functionality or another like reading or writing to/from a file
 
-"reading a file" means taking the content of a given file and storing that content into memory
+"reading a file" means taking the content of a given file and storing that content into memory??
 
-.exists(file) -- checks if a file exists
+.exists(file) -- checks if a file exists 
 .writeFile(file, data) -- writes "data" to a file
 
     -- data written to file w/ writeFile has to be string data so use JSON.stringify here??

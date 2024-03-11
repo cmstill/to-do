@@ -1,6 +1,8 @@
 import yargs from 'yargs';
-import fs from 'fs/promises'; //maybe append to file here was important...a way around the roadblock that is hiding in here
-import { toDoArr, addToDo, deleteToDo, listToDos } from './utility.js';
+import fs from 'fs/promises'; // maybe append to file here was important...a way around the roadblock that is hiding in here
+import {
+  addToDo, deleteToDo, listToDos, toDoArr,
+} from './utility.js';
 import ToDo from './toDoClass.js';
 
 const {
@@ -8,7 +10,7 @@ const {
 } = yargs(process.argv.slice(2))
   .scriptName('todo')
   .usage('Usage: $0 --add a --file f --deleteToDo d --list l --help h')
-  .example('$0 --add study javascript --file "./monday" --delete 212 --list no input but requires file to list from with --file --help')//this needs to work on copy/paste
+  .example('$0 --add study javascript --file "./monday" --delete 212 --list no input but requires file to list from with --file --help')// this needs to work on copy/paste
   .option('a', {
     alias: 'add',
     describe: 'adds one or more to-dos to a file',
@@ -43,40 +45,61 @@ const {
 //   }
 // };
 
-
-
+// how to check if a file exists and if so, write some some data to it
 if (file && add) {
-  if (fs.existsSync(file)) {
-    fs.readFile(file);
-    addToDo(add);
-  }
-} else {
+  let fileExists = true;
   try {
-    await fs.writeFile(file, ToDo.newArr);
+    await fs.stat(file);
+  } catch (ex) {
+    fileExists = false;
+  }
+
+  if (fileExists) {
+    const fileContents = await fs.readFile(file, { encoding: 'utf8', flag: 'r' });
+    const toDoArr = JSON.parse(fileContents);
     addToDo(add);
-  } catch (ex) {
-    console.error(ex);
+    await fs.writeFile(file, JSON.stringify(toDoArr));
+    // process.exit(0);
+    // if file does not exist
+  } else {
+    addToDo(add);
+    console.log(toDoArr);
+    await fs.writeFile(file, JSON.stringify(toDoArr));
   }
 }
 
-// code to add new todo to file with -a and -f
+// if (file && add) {
+//   if (fs.existsSync(file)) {
+//     fs.readFile(file);
+//     addToDo(add);
+//   }
+// } else {
+//   try {
+//     await fs.writeFile(file, ToDo.newArr); // don't need to create new file each time a make a new to do because each time my program runs, it's working with a new array...no memory
+//     addToDo(add);
+//   } catch (ex) {
+//     console.error(ex);
+//   }
+// }
 
-if (deleteFromList) {
-  deleteToDo(deleteFromList);
-}
+// // code to add new todo to file with -a and -f
 
-// const jsonToDos = JSON.stringify(toDos, null, 2);
+// if (deleteFromList) {
+//   deleteToDo(deleteFromList);
+// }
 
-// list funtionality.  this seems to work
+// // const jsonToDos = JSON.stringify(toDos, null, 2);
 
-if (list && file) {
-  try {
-    await fs.readFile(file);
-    listToDos();
-  } catch (ex) {
-    console.error('No file with that name exists');
-  }
-}
+// // list funtionality.  this seems to work
+
+// if (list && file) {
+//   try {
+//     await fs.readFile(file);
+//     listToDos();
+//   } catch (ex) {
+//     console.error('No file with that name exists');
+//   }
+// }
 
 // }
 

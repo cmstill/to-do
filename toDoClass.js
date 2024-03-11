@@ -4,5 +4,4 @@ export default class ToDo {
     this.ID = Math.floor(Math.random() * 1000);
     this.creationDate = new Date().toISOString();
   }
-static newArr = () => {const toDoArr = []};
 }
