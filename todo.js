@@ -13,12 +13,12 @@ const {
   .example('$0 --add study javascript --file "./monday" --delete 212 --list no input but requires file to list from with --file --help')// this needs to work on copy/paste
   .option('a', {
     alias: 'add',
-    describe: 'adds one or more to-dos to a file',
+    describe: 'adds a to-do to the file specified with file command',
     type: 'string',
   })
   .option('f', {
     alias: 'file',
-    describe: 'denotes file to store to-dos to',
+    describe: 'specifies file to write to-dos to',
     demandOption: 'the name of the to-do list you want to work with is required',
     type: 'string',
   })
@@ -30,7 +30,7 @@ const {
   .option('l', {
     alias: 'list',
     describe: 'lists todos',
-  })// may have to use "if list === undefined, then run the list funciton because I am "
+  })
   .showHelpOnFail()
   .parse();
 
@@ -66,7 +66,7 @@ if (deleteFromList && file) {
     toDoArr.length = 0;
     toDoArr.push(...parsedToDos);
     deleteToDo(deleteFromList);
-    await fs.writeFile(file, JSON.stringify(fileContents));
+    await fs.writeFile(file, JSON.stringify(toDoArr));
   } catch (ex) {
     console.error('No file with that name exists');
   }
