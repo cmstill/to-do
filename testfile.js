@@ -1,1 +1,0 @@
-I want to write this data into a new file, named testfile.txt

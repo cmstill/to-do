@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import fs from 'fs/promises'; // maybe append to file here was important...a way around the roadblock that is hiding in here
+import fs from 'fs/promises';
 import {
   addToDo, deleteToDo, listToDos, toDoArr,
 } from './utility.js';
@@ -34,18 +34,8 @@ const {
   .showHelpOnFail()
   .parse();
 
-// async code to create a new file
+// add file logic
 
-// const createFile = async (fileName) => {
-//   try {
-//     await fs.writeFile(fileName, toDoArr, { encoding: 'utf8' });
-//     console.log(`${file} was successfully created`);
-//   } catch (ex) {
-//     console.error(`Error creating the file: ${ex}`);
-//   }
-// };
-
-// how to check if a file exists and if so, write some some data to it
 if (file && add) {
   let fileExists = true;
   try {
@@ -56,70 +46,42 @@ if (file && add) {
 
   if (fileExists) {
     const fileContents = await fs.readFile(file, { encoding: 'utf8', flag: 'r' });
-    const toDoArr = JSON.parse(fileContents);
+    toDoArr.length = 0;
+    toDoArr.push(...JSON.parse(fileContents));
+    // const toDoArr = JSON.parse(fileContents);
     addToDo(add);
     await fs.writeFile(file, JSON.stringify(toDoArr));
-    // process.exit(0);
-    // if file does not exist
   } else {
     addToDo(add);
-    console.log(toDoArr);
     await fs.writeFile(file, JSON.stringify(toDoArr));
   }
 }
 
-// if (file && add) {
-//   if (fs.existsSync(file)) {
-//     fs.readFile(file);
-//     addToDo(add);
-//   }
-// } else {
-//   try {
-//     await fs.writeFile(file, ToDo.newArr); // don't need to create new file each time a make a new to do because each time my program runs, it's working with a new array...no memory
-//     addToDo(add);
-//   } catch (ex) {
-//     console.error(ex);
-//   }
-// }
+// deleteFromList logic
 
-// // code to add new todo to file with -a and -f
+if (deleteFromList && file) {
+  try {
+    const fileContents = await fs.readFile(file, { encoding: 'utf8', flag: 'r' });
+    const parsedToDos = JSON.parse(fileContents);
+    toDoArr.length = 0;
+    toDoArr.push(...parsedToDos);
+    deleteToDo(deleteFromList);
+    await fs.writeFile(file, JSON.stringify(fileContents));
+  } catch (ex) {
+    console.error('No file with that name exists');
+  }
+}
 
-// if (deleteFromList) {
-//   deleteToDo(deleteFromList);
-// }
+// list logic
 
-// // const jsonToDos = JSON.stringify(toDos, null, 2);
-
-// // list funtionality.  this seems to work
-
-// if (list && file) {
-//   try {
-//     await fs.readFile(file);
-//     listToDos();
-//   } catch (ex) {
-//     console.error('No file with that name exists');
-//   }
-// }
-
-// }
-
-// I need to get my toDoArr to the file I create with file command
-
-// async function readToDosFromFile(filePath) {
-//   try {
-//     const data = await fs.readFile(filePath, { encoding: 'utf8' });
-//     return JSON.parse(data);
-//   } catch (error) {
-//     // If the file doesn't exist, return an empty array
-//     if (error.code === 'ENOENT') {
-//       return [];
-//     } else {
-//       throw error;
-//     }
-//   }
-// }
-
-// async function writeToDosToFile(filePath, toDoArr) {
-//   const data = JSON.stringify(toDoArr, null, 2);
-//   await fs.writeFile(filePath, data, { encoding: 'utf8' });
-// }
+if (list && file) {
+  try {
+    const fileContents = await fs.readFile(file, { encoding: 'utf8', flag: 'r' });
+    const todosFromFile = JSON.parse(fileContents);
+    toDoArr.length = 0;
+    toDoArr.push(...todosFromFile);
+    listToDos();
+  } catch (ex) {
+    console.error('No file with that name exists');
+  }
+}
