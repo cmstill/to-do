@@ -48,7 +48,6 @@ if (file && add) {
     const fileContents = await fs.readFile(file, { encoding: 'utf8', flag: 'r' });
     toDoArr.length = 0;
     toDoArr.push(...JSON.parse(fileContents));
-    // const toDoArr = JSON.parse(fileContents);
     addToDo(add);
     await fs.writeFile(file, JSON.stringify(toDoArr));
   } else {
