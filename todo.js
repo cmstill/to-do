@@ -10,7 +10,7 @@ const {
 } = yargs(process.argv.slice(2))
   .scriptName('todo')
   .usage('Usage: $0 --add a --file f --deleteToDo d --list l --help h')
-  .example('$0 --add study javascript --file "./monday" --delete 212 --list no input but requires file to list from with --file --help')// this needs to work on copy/paste
+  .example('$0 --add study javascript --file "./monday" --delete 212 --list no input but requires file to list from with --file --help')
   .option('a', {
     alias: 'add',
     describe: 'adds a to-do to the file specified with file command',
@@ -24,8 +24,8 @@ const {
   })
   .option('d', {
     alias: 'deleteFromList',
-    describe: 'deletes to-do from to-do list according to provided ID number',
-    type: 'number',
+    describe: 'deletes to-do from to-do list according to provided ID string',
+    type: 'string',
   })
   .option('l', {
     alias: 'list',

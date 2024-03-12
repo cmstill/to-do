@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "description": "a command-line to-do app",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cameron Still",
   "license": "ISC",
   "dependencies": {
+    "id": "^0.0.0",
+    "nanoid": "^5.0.6",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

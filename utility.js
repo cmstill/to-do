@@ -1,4 +1,4 @@
-import ToDo from './toDoClass.js'
+import ToDo from './toDoClass.js';
 
 export let toDoArr = [];
 
@@ -20,6 +20,7 @@ export const listToDos = () => {
 // delete functionality: deletes todo according to provided ID#
 
 export const deleteToDo = (id) => {
-  const newArr = toDoArr.filter((todo) => todo.ID !== id);
+  const stringID = String(id);
+  const newArr = toDoArr.filter((todo) => todo.ID !== stringID);
   toDoArr = newArr;
 };

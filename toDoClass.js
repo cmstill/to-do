@@ -1,7 +1,8 @@
+import { nanoid } from 'nanoid';
 export default class ToDo {
   constructor(name) {
     this.name = name;
-    this.ID = Math.floor(Math.random() * 1000000);
+    this.ID = nanoid(4);
     this.creationDate = new Date().toISOString();
   }
 }
